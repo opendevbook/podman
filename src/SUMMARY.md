@@ -6,3 +6,5 @@
 - [Lab3 Container OverlayFS](./module1/lab3.md)
 - [Lab4 Container Network](./module1/lab4.md)
 
+# Docker CE Lab
+- [Install Docker on CentOs 9 Stream](./module1/install_docker_cent9s.md)
