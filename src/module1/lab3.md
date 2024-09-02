@@ -104,5 +104,11 @@ sudo mount -t overlay overlay -o lowerdir=/mnt/lower,upperdir=/mnt/upper,workdir
 
 ![](../assets/images/overlay_workshop1.png)
 
+4  Verify
 
+```
+$ ls /mnt/merged
+lowerfile.txt
+```
+> Ensure all directories exist: The lowerdir, upperdir, workdir, and merged directories must exist before attempting the mount.
 

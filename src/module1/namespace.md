@@ -48,36 +48,43 @@ Apparently, PID 1 belongs to six different namespaces:
 - UTS
 - user
 
-### The /proc/<PID>/ns Directory
+### The /proc/(PID)/ns Directory
 
 ```
 [vagrant@centos9s ~]$ ps aux  | grep vagrant
-root        3851  0.0  0.3  19404 11520 ?        Ss   13:20   0:00 sshd: vagrant [priv]
-vagrant     3856  0.0  0.3  22644 13516 ?        Ss   13:20   0:00 /usr/lib/systemd/systemd --user
-vagrant     3858  0.0  0.1 108256  7476 ?        S    13:20   0:00 (sd-pam)
-vagrant     3865  0.0  0.1  19780  7460 ?        S    13:20   0:00 sshd: vagrant@pts/0
-vagrant     3866  0.0  0.1   8408  4992 pts/0    Ss   13:20   0:00 -bash
-vagrant     4042  0.0  0.0  10104  3328 pts/0    R+   13:38   0:00 ps aux
-vagrant     4043  0.0  0.0   6428  2176 pts/0    R+   13:38   0:00 grep --color=auto vagrant
+root        3865  0.0  0.3  19404 11648 ?        Ss   00:23   0:00 sshd: vagrant [priv]
+vagrant     3869  0.1  0.3  22776 13648 ?        Ss   00:23   0:00 /usr/lib/systemd/systemd --user
+vagrant     3871  0.0  0.2 108168  9160 ?        S    00:23   0:00 (sd-pam)
+vagrant     3878  0.0  0.1  19780  7264 ?        S    00:23   0:00 sshd: vagrant@pts/0
+vagrant     3879  0.0  0.1   8408  5120 pts/0    Ss   00:23   0:00 -bash
+vagrant     3915  0.0  0.0  10104  3328 pts/0    R+   00:24   0:00 ps aux
+vagrant     3916  0.0  0.0   6428  2176 pts/0    S+   00:24   0:00 grep --color=auto vagrant
 ```
 
-Generally, the /proc/<PID>/ns directory contains symbolic links to the namespace files for each type of namespace that the process belongs to.
+Generally, the /proc/(PID)/ns directory contains symbolic links to the namespace files for each type of namespace that the process belongs to.
 
 For instance, let’s use ls to check the namespaces of the process with PID 3856:
 
 ```
+[vagrant@centos9s ~]$ sudo ls -l /proc/3869/ns
 total 0
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:20 cgroup -> 'cgroup:[4026531835]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 ipc -> 'ipc:[4026531839]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 mnt -> 'mnt:[4026531841]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 net -> 'net:[4026531840]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 pid -> 'pid:[4026531836]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:38 pid_for_children -> 'pid:[4026531836]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:38 time -> 'time:[4026531834]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:38 time_for_children -> 'time:[4026531834]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 user -> 'user:[4026531837]'
-lrwxrwxrwx. 1 vagrant vagrant 0 Aug 20 13:31 uts -> 'uts:[4026531838]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:23 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 net -> 'net:[4026531840]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 pid -> 'pid:[4026531836]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 time -> 'time:[4026531834]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 user -> 'user:[4026531837]'
+lrwxrwxrwx. 1 vagrant vagrant 0 Aug 28 00:24 uts -> 'uts:[4026531838]'
 ```
+![](../assets/images/ns_vagrant_pid.png)
+
+## Lab: Exploring IP Netnamespaces with `unshare`
+The unshare command in Linux is used to run a program in a new namespace or to "unshare" a namespace from the current process. Namespaces in Linux allow processes to have isolated instances of global resources such as the filesystem, network, process IDs, and more. The unshare command lets you isolate these resources so that changes in one namespace do not affect others.
+
+![](../assets/images/unshare.png)
 
 ## Lab: Exploring IP Netnamespaces with `ip netns`
 

@@ -2,7 +2,45 @@
 
 Docker simplifies the process of managing application processes in containers, which are isolated from each other and the host system. This isolation improves the security and efficiency of deploying applications.
 
+# เตรียม vagrantfile
+- Create folder
+```
+mkdir vagrant-docker
+cd vgrant-docker
+```
+
+- Create Vagrantfile
+```ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+$script = <<-SCRIPT
+
+ 
+SCRIPT
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/centos9s"
+  config.vm.network "private_network", ip: "192.168.33.40"
+  config.vm.synced_folder ".", "/vagrant", type: 'rsync'
+
+  
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 2
+    vb.memory = 2048
+  end
+
+  config.vm.provision "shell" , inline: $script
+end
+
+```
 ## Step1 Add Docker Repository
+
+
 - install docker latest version from docker inc
 ```
 $ sudo dnf install -y yum-utils device-mapper-persistent-data lvm2
@@ -211,6 +249,7 @@ Compose works in all environments; production, staging, development, testing, as
 
 - [https://github.com/docker/compose/](https://github.com/docker/compose/)
 
+## Install Docker compose
 ```
 $ sudo dnf install docker-compose-plugin
 ```

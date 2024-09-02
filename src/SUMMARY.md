@@ -8,3 +8,6 @@
 
 # Docker CE Lab
 - [Install Docker on CentOs 9 Stream](./module1/install_docker_cent9s.md)
+
+# Deploy Wordpress 
+- [Deploy Wordpress with Docker](./module1/deploy_wordpress.md)
