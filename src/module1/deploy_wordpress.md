@@ -203,6 +203,7 @@ a675fbecf8a8   wordpress_mynet     bridge    local
 [vagrant@centos9s wordpress]$ docker compose exec nginx bash
 root@57db1db01aad:/# cd /var/www/html/
 ```
+
 - Renew Certificate
 ```
 [vagrant@centos9s wordpress]$ docker compose up --force-recreate --no-deps certbot
